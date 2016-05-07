@@ -22,6 +22,7 @@ class CreatePitchTables extends Migration
         $table->increments('id');
         $table->string('slug')->unique();
         $table->string('description');
+        $table->string('description_es');
         $table->boolean('ball');
         $table->boolean('strike');
         $table->timestamps();
@@ -30,11 +31,16 @@ class CreatePitchTables extends Migration
         $table->increments('id');
         $table->string('slug')->unique();
         $table->string('description');
+        $table->string('description_es');
+        $table->boolean('hit');
+        $table->boolean('ab');
         $table->timestamps();
       });
       Schema::create('plate_appearances', function(Blueprint $table){
         $table->increments('id');
+        $table->string('guid')->unique();
         $table->integer('inning');
+        $table->enum('side', array('top', 'bottom'));
         $table->integer('outs');
         $table->integer('home_team_runs');
         $table->integer('away_team_runs');
@@ -51,8 +57,7 @@ class CreatePitchTables extends Migration
       });
       Schema::create('pitches', function (Blueprint $table) {
         $table->increments('id');
-        $table->string('description');
-        $table->string('description_es');
+        $table->string('svId')->unique();
         $table->string('video_url');
         $table->integer('plate_appearance_id')->unsigned();
         $table->foreign('plate_appearance_id')->references('id')->on('plate_appearances');
@@ -86,7 +91,6 @@ class CreatePitchTables extends Migration
         $table->integer('nasty');
         $table->decimal('spin_dir',7,4);
         $table->decimal('spin_rate',8,4);
-        $table->string('svId');
         $table->timestamps();
       });
     }
