@@ -8,11 +8,12 @@ materialAdmin
         self.batters = [];
         self.pitchers = [];
         self.pitches = [];
+        self.plate_appearances = [];
         self.selectedInning = 1;
         self.selectedSide = 'top';
         
-        pitchService.getPitches().then(function(d){
-          self.pitches = d.data;
+        pitchService.getPlateAppearances().then(function(d){
+          self.plate_appearances = d.data;
         });
     
         self.showInnings = function(){
@@ -21,19 +22,19 @@ materialAdmin
           }
         }
     
-        self.filterPitches = function(){
+        self.filterPlateAppearances = function(){
           return function(p){
             if (self.showInnings()){
-              if (p.plate_appearance.inning != self.selectedInning){
+              if (p.inning != self.selectedInning){
                 return false;
               }
-              if (p.plate_appearance.side != self.selectedSide){
+              if (p.side != self.selectedSide){
                 return false;
               }
             }
             if (self.filters.selectedPitchers.length > 0){
               for(var pitcher in self.filters.selectedPitchers){
-                if (self.filters.selectedPitchers[pitcher].id == p.plate_appearance.pitcher.pl_key){
+                if (self.filters.selectedPitchers[pitcher].id == p.pitcher.pl_key){
                   return true;
                 }
               }
@@ -41,7 +42,7 @@ materialAdmin
             }
             if (self.filters.selectedBatters.length > 0){
               for(var batter in self.filters.selectedBatters){
-                if (self.filters.selectedBatters[batter].id == p.plate_appearance.batter.pl_key){
+                if (self.filters.selectedBatters[batter].id == p.batter.pl_key){
                   return true;
                 }
               }

@@ -70,7 +70,7 @@ class GCLController extends Controller {
   }
   
   function getPlateAppearances(){
-    $plate_appearances = PlateAppearance::with('pitcher', 'batter', 'pitches')
+    $plate_appearances = PlateAppearance::with('pitcher', 'batter', 'pitches', 'pitches.result', 'result')
       ->get();
       
     return $plate_appearances;

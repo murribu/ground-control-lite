@@ -55,31 +55,33 @@
                     <li class="btn-wave" ng-class="{ 'active' : rctrl.selectedSide == 'top' }"><a href="#" ng-click="rctrl.selectedSide = 'top'">Top</a></li>
                     <li class="btn-wave" ng-class="{ 'active' : rctrl.selectedSide == 'bottom' }"><a href="#" ng-click="rctrl.selectedSide = 'bottom'">Bottom</a></li>
                   </ul>
-                  <div ng-repeat="p in rctrl.pitches | filter:rctrl.filterPitches()">
-                    <div class="pitch">
-                      <video id="videoPlayer_{{p.id}}" controls class="videoPlayer" preload="none">
-                        <source src="{{p.video_url}}" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2'>
-                        Video not supported.
-                      </video>
-                      <div class="situation">
-                        {{p.plate_appearance.pitcher.pl_fName + ' ' + p.plate_appearance.pitcher.pl_lName}}
-                        pitching to
-                        {{p.plate_appearance.batter.pl_fName + ' ' + p.plate_appearance.batter.pl_lName}}<br>
-                        {{p.plate_appearance.side}} of the {{p.plate_appearance.inning | ordinal}}<br>
-                      </div>
-                      <div class="result">
-                        {{p.result.description}}
-                      </div>
-                      <div class="result">
-                        {{p.plate_appearance.result.description}}
-                      </div>
-                      <button ng-click="rctrl.showVideo(p.id);" class="btn">Video</button>
-                      <div class="location">
-                        <div class="zone" style="position:absolute;left:33%;width:33%;height:100%;border-left:1px dashed black;border-right:1px dashed black;"></div>
-                        <div class="zone" style="position:absolute;top:33%;height:33%;width:100%;border-top:1px dashed black;border-bottom:1px dashed black;"></div>
-                        <div class="dot" style="
-                        top:{{56-(60*((p.pz-p.szb)/(p.szt-p.szb)))}}px;
-                        left:{{26-(p.px*60*12/17)}}px"></div>
+                  <div class="plate-appearance" ng-repeat="pa in rctrl.plate_appearances | filter:rctrl.filterPlateAppearances()" ng-click="rctrl.toggleView(pa)">
+                    <div class="pitches">
+                      <div class="pitch" ng-repeat="p in pa.pitches">
+                        <video id="videoPlayer_{{p.id}}" controls class="videoPlayer" preload="none">
+                          <source src="{{p.video_url}}" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2'>
+                          Video not supported.
+                        </video>
+                        <div class="situation">
+                          {{pa.pitcher.pl_fName + ' ' + pa.pitcher.pl_lName}}
+                          pitching to
+                          {{pa.batter.pl_fName + ' ' + pa.batter.pl_lName}}<br>
+                          {{pa.side}} of the {{pa.inning | ordinal}}<br>
+                        </div>
+                        <div class="pitch-result">
+                          {{p.result.description}}
+                        </div>
+                        <div class="pa-result" ng-show="p.last_pitch_of_pa == 1">
+                          {{pa.result.description}}
+                        </div>
+                        <button ng-click="rctrl.showVideo(p.id);" class="btn video-button">Video</button>
+                        <div class="location">
+                          <div class="zone" style="position:absolute;left:33%;width:33%;height:100%;border-left:1px dashed black;border-right:1px dashed black;"></div>
+                          <div class="zone" style="position:absolute;top:33%;height:33%;width:100%;border-top:1px dashed black;border-bottom:1px dashed black;"></div>
+                          <div class="dot" style="
+                          top:{{56-(60*((p.pz-p.szb)/(p.szt-p.szb)))}}px;
+                          left:{{26-(p.px*60*12/17)}}px"></div>
+                        </div>
                       </div>
                     </div>
                   </div>

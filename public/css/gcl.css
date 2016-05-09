@@ -1,5 +1,5 @@
 .pitch{
-  width:90%;
+  width:80%;
   border-top: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
@@ -23,7 +23,28 @@
   border-radius: 5px;
   z-index:5;
 }
-
+.situation{
+  position:absolute;
+  left:0;
+  width:18%;
+  margin-left:1%;
+}
+.pitch-result{
+  position:absolute;
+  left:20%;
+  width:18%;
+}
+.pa-result{
+  position:absolute;
+  left: 40%;
+  width:18%;
+}
+.video-button{
+  position:absolute;
+  left: 60%;
+  width:18%;
+  
+}
 .ui-dialog .ui-dialog-content{
      position: relative;
      border: 0;
