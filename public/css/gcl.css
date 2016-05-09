@@ -23,6 +23,9 @@
   border-radius: 5px;
   z-index:5;
 }
+.plate-appearance:last-child .pitch:last-child{
+  border-bottom: 1px solid black;
+}
 .situation{
   position:absolute;
   left:0;

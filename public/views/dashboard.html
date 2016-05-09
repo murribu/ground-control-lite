@@ -68,7 +68,7 @@
                           {{pa.batter.pl_fName + ' ' + pa.batter.pl_lName}}<br>
                           {{pa.side}} of the {{pa.inning | ordinal}}<br>
                           Astros {{pa.home_team_runs}}, Mariners {{pa.away_team_runs}}<br>
-                          {{p.balls}}-{{p.strikes}}<br>
+                          {{p.balls}}-{{p.strikes}}, 
                           {{pa.outs}} {{pa.outs == 1 ? 'out' : 'outs'}}
                         </div>
                         <div class="pitch-result">
@@ -82,7 +82,7 @@
                           <div class="zone" style="position:absolute;left:33%;width:33%;height:100%;border-left:1px dashed black;border-right:1px dashed black;"></div>
                           <div class="zone" style="position:absolute;top:33%;height:33%;width:100%;border-top:1px dashed black;border-bottom:1px dashed black;"></div>
                           <div class="dot" style="
-                          top:{{56-(60*((p.pz-p.szb)/(p.szt-p.szb)))}}px;
+                          top:{{rctrl.Math.max(23,rctrl.Math.min(73,56-(60*((p.pz-p.szb)/(p.szt-p.szb)))))}}px;
                           left:{{26-(p.px*60*12/17)}}px"></div>
                         </div>
                       </div>

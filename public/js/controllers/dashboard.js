@@ -11,7 +11,7 @@ materialAdmin
         self.plate_appearances = [];
         self.selectedInning = 1;
         self.selectedSide = 'top';
-        
+        self.Math = window.Math;
         pitchService.getPlateAppearances().then(function(d){
           self.plate_appearances = d.data;
         });
