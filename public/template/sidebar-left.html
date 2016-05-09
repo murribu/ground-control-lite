@@ -1,20 +1,7 @@
-<div class="sidebar-inner c-overflow">    
-
+<div class="sidebar-inner c-overflow">
     <ul class="main-menu">
         <li data-ui-sref-active="active">
             <a data-ui-sref="home" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-home"></i> Home</a>
-        </li>
-        <li data-ng-class="{ 'active toggled': mactrl.$state.includes('players') }">
-            <a data-ui-sref="players.list" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-view-list"></i> Players</a>
-        </li>
-        <li data-ng-class="{ 'active toggled': mactrl.$state.includes('heat-zone') }"><a data-ui-sref-active="active" href="#/heat-zone/"><i class="zmdi zmdi-fire"></i> Heat Zone</a></li>
-        <li class="sub-menu" data-ng-class="{ 'active toggled': mactrl.$state.includes('reports') }">
-            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i> Reports</a>
-
-            <ul>
-                <li><a data-ui-sref-active="active" data-ui-sref="reports.catcher-framing" data-ng-click="mactrl.sidebarStat($event)">Catcher Framing</a></li>
-                <li><a data-ui-sref-active="active" data-ui-sref="reports.velocity-diff" data-ng-click="mactrl.sidebarStat($event)">Pitcher Velocity Difference</a></li>
-            </ul>
         </li>
     </ul>
 </div>

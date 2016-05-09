@@ -68,8 +68,8 @@ class CreatePitchTables extends Migration
         $table->integer('tfs');
         $table->decimal('start_speed', 6,4);
         $table->decimal('end_speed', 6,4);
-        $table->decimal('x',6,4);
-        $table->decimal('y',6,4);
+        $table->decimal('x',7,4);
+        $table->decimal('y',7,4);
         $table->decimal('szt',6,4);
         $table->decimal('szb',6,4);
         $table->decimal('pfx_x',7,4);

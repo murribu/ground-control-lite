@@ -10,7 +10,7 @@ class Pitch extends Model {
   }
   
   public function result(){
-    return $this->belongsTo('App\Models\PitchResult');
+    return $this->belongsTo('App\Models\PitchResult', 'pitch_result_id');
   }
   
   public function type(){

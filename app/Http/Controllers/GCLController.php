@@ -55,7 +55,9 @@ class GCLController extends Controller {
   }
   
   function getPitches(){
-    $pitches = Pitch::all();
+    $pitches = Pitch::with('result','plate_appearance','plate_appearance.pitcher','plate_appearance.batter')
+      ->take(10)
+      ->get();
     return $pitches;
   }
 }

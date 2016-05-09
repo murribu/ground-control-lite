@@ -1,6 +1,7 @@
 materialAdmin
-    .config(function ($stateProvider, $urlRouterProvider){
+    .config(function ($stateProvider, $urlRouterProvider, $sceProvider){
         $urlRouterProvider.otherwise("/home");
+        $sceProvider.enabled(false);
 
 
         $stateProvider
@@ -21,7 +22,7 @@ materialAdmin
                                 files: [
                                     'vendors/bower_components/nouislider/jquery.nouislider.css',
                                     'vendors/bower_components/chosen/chosen.min.css',
-                                    'css/heatzone.css',
+                                    'css/gcl.css',
                                     'css/select.min.css',
                                 ]
                             },
@@ -32,6 +33,7 @@ materialAdmin
                                     'vendors/bower_components/chosen/chosen.jquery.js',
                                     'vendors/bower_components/angular-chosen-localytics/chosen.js',
                                     'js/select.min.js',
+                                    'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js',
                                 ]
                             },
                         ])

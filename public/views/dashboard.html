@@ -4,6 +4,7 @@
     <aside id="sidebar" data-ng-include="'template/sidebar-left.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
 
     <section id="content">
+        <div id="overlay" class="overlay"></div>
         <div class="container" data-ng-controller="dashboardCtrl as rctrl">
             <div class="card">
                 <div class="card-header">
@@ -48,7 +49,24 @@
             <div class="card">
                 <div class="card-header">
                   <div ng-repeat="p in rctrl.pitches">
-                    <div>{{p.id}}</div>
+                    <div class="pitch">
+                      <video id="videoPlayer_{{p.id}}" controls class="videoPlayer">
+                        <source src="{{p.video_url}}" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2'>
+                        Video not supported.
+                      </video>
+                      {{p.plate_appearance.pitcher.pl_fName + ' ' + p.plate_appearance.pitcher.pl_lName}}
+                      pitching to
+                      {{p.plate_appearance.batter.pl_fName + ' ' + p.plate_appearance.batter.pl_lName}}<br>
+                      {{p.plate_appearance.side}} of the {{p.plate_appearance.inning | ordinal}}<br>
+                      <button ng-click="rctrl.showVideo(p.id);" class="btn">Video</button>
+                      <div class="location">
+                        <div class="zone" style="position:absolute;left:33%;width:33%;height:100%;border-left:1px dashed black;border-right:1px dashed black;"></div>
+                        <div class="zone" style="position:absolute;top:33%;height:33%;width:100%;border-top:1px dashed black;border-bottom:1px dashed black;"></div>
+                        <div class="dot" style="
+                        top:{{56-(60*((p.pz-p.szb)/(p.szt-p.szb)))}}px;
+                        left:{{26-(p.px*60*12/17)}}px"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
             </div>
