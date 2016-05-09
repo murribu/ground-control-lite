@@ -10,6 +10,7 @@ use Redirect;
 use Session;
 
 use App\Models\Pitch;
+use App\Models\PlateAppearance;
 use App\Models\Player;
 
 class GCLController extends Controller {
@@ -27,6 +28,10 @@ class GCLController extends Controller {
   
   function getPitchers(){
     $players = Player::whereRaw('pl_key in (select pitcher_id from plate_appearances)')
+      ->where(function($query){
+        $query->whereRaw('pl_fname like ?', array('%'.Input::get('q').'%'));
+        $query->orWhereRaw('pl_lname like ?', array('%'.Input::get('q').'%'));
+      })
       ->selectRaw('pl_key id, concat(pl_fname, \' \', pl_lname) name')
       ->orderBy('pl_lname')
       ->orderBy('pl_fname')
@@ -39,6 +44,10 @@ class GCLController extends Controller {
   
   function getBatters(){
     $players = Player::whereRaw('pl_key in (select batter_id from plate_appearances)')
+      ->where(function($query){
+        $query->whereRaw('pl_fname like ?', array('%'.Input::get('q').'%'));
+        $query->orWhereRaw('pl_lname like ?', array('%'.Input::get('q').'%'));
+      })
       ->selectRaw('pl_key id, concat(pl_fname, \' \', pl_lname) name')
       ->orderBy('pl_lname')
       ->orderBy('pl_fname')
@@ -56,8 +65,14 @@ class GCLController extends Controller {
   
   function getPitches(){
     $pitches = Pitch::with('result','plate_appearance','plate_appearance.pitcher','plate_appearance.batter')
-      ->take(10)
       ->get();
     return $pitches;
+  }
+  
+  function getPlateAppearances(){
+    $plate_appearances = PlateAppearance::with('pitcher', 'batter', 'pitches')
+      ->get();
+      
+    return $plate_appearances;
   }
 }

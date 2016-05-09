@@ -20,3 +20,4 @@ Route::get('players/batters', 'GCLController@getBatters');
 Route::get('players/pitchers', 'GCLController@getPitchers');
 
 Route::get('pitches', 'GCLController@getPitches');
+Route::get('plate_appearances', 'GCLController@getPlateAppearances');

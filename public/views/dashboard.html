@@ -14,7 +14,7 @@
                     <div>
                         <div class="row">
                             <div class="col-md-3">
-                                <ui-select multiple ng-model="rctrl.filters.selectedPitcher"
+                                <ui-select multiple ng-model="rctrl.filters.selectedPitchers"
                                          theme="bootstrap"
                                          reset-search-input="false"
                                          style="width: 200px;">
@@ -30,7 +30,7 @@
                               Pitching to
                             </div>
                             <div class="col-md-3">
-                                <ui-select multiple ng-model="rctrl.filters.selectedBatter"
+                                <ui-select multiple ng-model="rctrl.filters.selectedBatters"
                                          theme="bootstrap"
                                          reset-search-input="false"
                                          style="width: 200px;">
@@ -48,16 +48,31 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                  <div ng-repeat="p in rctrl.pitches">
+                  <ul class="nav tab-nav tn-justified" ng-show="rctrl.showInnings()">
+                    <li class="btn-wave" ng-repeat="inning in rctrl.range(1,9)" ng-class="{ 'active' : rctrl.selectedInning == inning }"><a href="#" ng-click="rctrl.selectedInning = inning">{{inning | ordinal}} inning</a></li>
+                  </ul>
+                  <ul class="nav tab-nav tn-justified" ng-show="rctrl.showInnings()">
+                    <li class="btn-wave" ng-class="{ 'active' : rctrl.selectedSide == 'top' }"><a href="#" ng-click="rctrl.selectedSide = 'top'">Top</a></li>
+                    <li class="btn-wave" ng-class="{ 'active' : rctrl.selectedSide == 'bottom' }"><a href="#" ng-click="rctrl.selectedSide = 'bottom'">Bottom</a></li>
+                  </ul>
+                  <div ng-repeat="p in rctrl.pitches | filter:rctrl.filterPitches()">
                     <div class="pitch">
-                      <video id="videoPlayer_{{p.id}}" controls class="videoPlayer">
+                      <video id="videoPlayer_{{p.id}}" controls class="videoPlayer" preload="none">
                         <source src="{{p.video_url}}" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2'>
                         Video not supported.
                       </video>
-                      {{p.plate_appearance.pitcher.pl_fName + ' ' + p.plate_appearance.pitcher.pl_lName}}
-                      pitching to
-                      {{p.plate_appearance.batter.pl_fName + ' ' + p.plate_appearance.batter.pl_lName}}<br>
-                      {{p.plate_appearance.side}} of the {{p.plate_appearance.inning | ordinal}}<br>
+                      <div class="situation">
+                        {{p.plate_appearance.pitcher.pl_fName + ' ' + p.plate_appearance.pitcher.pl_lName}}
+                        pitching to
+                        {{p.plate_appearance.batter.pl_fName + ' ' + p.plate_appearance.batter.pl_lName}}<br>
+                        {{p.plate_appearance.side}} of the {{p.plate_appearance.inning | ordinal}}<br>
+                      </div>
+                      <div class="result">
+                        {{p.result.description}}
+                      </div>
+                      <div class="result">
+                        {{p.plate_appearance.result.description}}
+                      </div>
                       <button ng-click="rctrl.showVideo(p.id);" class="btn">Video</button>
                       <div class="location">
                         <div class="zone" style="position:absolute;left:33%;width:33%;height:100%;border-left:1px dashed black;border-right:1px dashed black;"></div>

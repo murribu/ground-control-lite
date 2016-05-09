@@ -14,4 +14,7 @@ class PlateAppearance extends Model {
   public function result(){
     return $this->belongsTo('App\Models\PlateAppearanceResult', 'plate_appearance_result_id');
   }
+  public function pitches(){
+    return $this->hasMany('App\Models\Pitch');
+  }
 }
