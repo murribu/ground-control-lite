@@ -64,12 +64,16 @@ class PitchesSeeder extends Seeder{
     }
     $pa->plate_appearance_result_id = $pa_result->id;
     $pa->save();
+    $balls = 0;
+    $strikes = 0;
     foreach($at_bat->xpath('pitch') as $pitch){
       $p = Pitch::where('svId', $pitch['sv_id'])->first();
       if (!$p){
         $p = new Pitch;
         $p->svId = $pitch['sv_id'];
       }
+      $p->balls = $balls;
+      $p->strikes = $strikes;
       $video = $this->rss_xml->xpath('/pitchMediaList/pitchMedia[@svId="'.$pitch['sv_id'].'"]/media[@type="FLASH_4500K_1280X720"]');
       $p->video_url = $video[0]['url'][0];
       $p->plate_appearance_id = $pa->id;
@@ -82,6 +86,25 @@ class PitchesSeeder extends Seeder{
         $pitch_result->save();
       }
       $p->pitch_result_id = $pitch_result->id;
+      switch ($pitch_result->slug){
+        case "Ball":
+        case "Ball In Dirt":
+          $balls++;
+          break;
+        case "Foul (Runner Going)":
+        case "Foul Tip":
+        case "Foul":
+          if ($strikes < 2){
+            $strikes++;
+          }
+          break;
+        case "Called Strike":
+        case "Swinging Strike":
+        case "Swinging Strike (Blocked)":
+          $strikes++;
+          break;
+      }
+      $p->last_pitch_of_pa = $at_bat->xpath('pitch')[count($at_bat->xpath('pitch'))-1]['sv_id'] == $pitch['sv_id'];
       $pitch_type = PitchType::where('slug', $pitch['pitch_type'])->first();
       if (!$pitch_type){
         $pitch_type = new PitchType;
