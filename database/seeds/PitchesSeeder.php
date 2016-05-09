@@ -20,23 +20,33 @@ class PitchesSeeder extends Seeder{
     $this->rss_xml_contents = File::get('storage/data/open_414595.xml');
     $this->rss_xml = new SimpleXMLElement($this->rss_xml_contents);
     
+    $home_team_runs = 0;
+    $away_team_runs = 0;
     for($inning = 1; $inning <= 9; $inning++){
       $inning_xml_contents = File::get('storage/data/inning_'.$inning.'.xml');
       $inning_xml = new SimpleXMLElement($inning_xml_contents);
       $top_atbats = $inning_xml->xpath('/inning/top/atbat');
+      $outs = 0;
       while(list( , $at_bat) = each($top_atbats)) {
-        $this->store_pa($at_bat, $inning, 'top');
+        $this->store_pa($at_bat, $inning, 'top', $outs, $home_team_runs, $away_team_runs);
+        $outs = $at_bat['o'];
+        $home_team_runs = $at_bat['home_team_runs'];
+        $away_team_runs = $at_bat['away_team_runs'];
       }
+      $outs = 0;
       $top_atbats = $inning_xml->xpath('/inning/bottom/atbat');
       while(list( , $at_bat) = each($top_atbats)) {
-        $this->store_pa($at_bat, $inning, 'bottom');
+        $this->store_pa($at_bat, $inning, 'bottom', $outs, $home_team_runs, $away_team_runs);
+        $outs = $at_bat['o'];
+        $home_team_runs = $at_bat['home_team_runs'];
+        $away_team_runs = $at_bat['away_team_runs'];
       }
     }
     
     return;
   }
   
-  private function store_pa($at_bat, $inning, $side){
+  private function store_pa($at_bat, $inning, $side, $outs, $home_team_runs, $away_team_runs){
     $pa = PlateAppearance::where('guid', $at_bat['play_guid'])->first();
     if (!$pa){
       $pa = new PlateAppearance;
@@ -44,9 +54,9 @@ class PitchesSeeder extends Seeder{
     $pa->guid = $at_bat['play_guid'];
     $pa->inning = $inning;
     $pa->side = $side;
-    $pa->outs = $at_bat['o'];
-    $pa->home_team_runs = $at_bat['home_team_runs'];
-    $pa->away_team_runs = $at_bat['away_team_runs'];
+    $pa->outs = $outs;
+    $pa->home_team_runs = $home_team_runs;
+    $pa->away_team_runs = $away_team_runs;
     $pa->description = $at_bat['des'];
     $pa->description_es = $at_bat['des_es'];
     $pa->start_tfs = $at_bat['start_tfs'];

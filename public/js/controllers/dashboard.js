@@ -34,19 +34,17 @@ materialAdmin
             }
             if (self.filters.selectedPitchers.length > 0){
               for(var pitcher in self.filters.selectedPitchers){
-                if (self.filters.selectedPitchers[pitcher].id == p.pitcher.pl_key){
-                  return true;
+                if (self.filters.selectedPitchers[pitcher].id != p.pitcher.pl_key){
+                  return false;
                 }
               }
-              return false;
             }
             if (self.filters.selectedBatters.length > 0){
               for(var batter in self.filters.selectedBatters){
-                if (self.filters.selectedBatters[batter].id == p.batter.pl_key){
-                  return true;
+                if (self.filters.selectedBatters[batter].id != p.batter.pl_key){
+                  return false;
                 }
               }
-              return false;
             }
             return true;
           };
@@ -54,8 +52,8 @@ materialAdmin
     
         self.showVideo = function(id){
           $(".videoPlayer").dialog({
-             width: 576,
-             height: 324,
+             width:640,
+             height:360,
              autoOpen: false,
              resizable: false,
              show: {

@@ -67,12 +67,15 @@
                           pitching to
                           {{pa.batter.pl_fName + ' ' + pa.batter.pl_lName}}<br>
                           {{pa.side}} of the {{pa.inning | ordinal}}<br>
+                          Astros {{pa.home_team_runs}}, Mariners {{pa.away_team_runs}}<br>
+                          {{p.balls}}-{{p.strikes}}<br>
+                          {{pa.outs}} {{pa.outs == 1 ? 'out' : 'outs'}}
                         </div>
                         <div class="pitch-result">
                           {{p.result.description}}
                         </div>
                         <div class="pa-result" ng-show="p.last_pitch_of_pa == 1">
-                          {{pa.result.description}}
+                          {{pa.description}}
                         </div>
                         <button ng-click="rctrl.showVideo(p.id);" class="btn video-button">Video</button>
                         <div class="location">
