@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('players', 'GCLController@getPlayers');
+Route::get('players/batters', 'GCLController@getBatters');
+Route::get('players/pitchers', 'GCLController@getPitchers');
+
+Route::get('pitches', 'GCLController@getPitches');

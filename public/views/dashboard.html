@@ -1,0 +1,59 @@
+<header id="header" data-ng-include="'template/header.html'" data-ng-controller="headerCtrl as hctrl"></header>
+
+<section id="main">
+    <aside id="sidebar" data-ng-include="'template/sidebar-left.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+    <section id="content">
+        <div class="container" data-ng-controller="dashboardCtrl as rctrl">
+            <div class="card">
+                <div class="card-header">
+                    <h2>June 14, 2015</h2> <small></small>
+                </div>
+                <div class="card-body card-padding">
+                    <div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <ui-select multiple ng-model="rctrl.filters.selectedPitcher"
+                                         theme="bootstrap"
+                                         reset-search-input="false"
+                                         style="width: 200px;">
+                                    <ui-select-match placeholder="All pitchers">{{$item.name}}</ui-select-match>
+                                    <ui-select-choices repeat="p in rctrl.pitchers"
+                                             refresh="rctrl.refreshPitchers($select.search)"
+                                             refresh-delay="0">
+                                      <div ng-bind="p.name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-2">
+                              Pitching to
+                            </div>
+                            <div class="col-md-3">
+                                <ui-select multiple ng-model="rctrl.filters.selectedBatter"
+                                         theme="bootstrap"
+                                         reset-search-input="false"
+                                         style="width: 200px;">
+                                    <ui-select-match placeholder="All batters">{{$item.name}}</ui-select-match>
+                                    <ui-select-choices repeat="p in rctrl.batters"
+                                             refresh="rctrl.refreshBatters($select.search)"
+                                             refresh-delay="0">
+                                      <div ng-bind="p.name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                  <div ng-repeat="p in rctrl.pitches">
+                    <div>{{p.id}}</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<footer id="footer" data-ng-include="'template/footer.html'"></footer>
